@@ -115,12 +115,13 @@ namespace InterSystems.AspNet.Identity.Cache
         public bool RequireUniqueEmail { get; set; }
         
         /// <summary>
-        /// Needed to ensure subclasses share the same tables 
-        /// as Cache initialization sql scripts create
+        /// Maps entities to tables, checks fields restrictions 
+        /// needed for providing identity authentification.
         /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // Mapping and configuring identity entities according to the Cache tables
             var user = modelBuilder.Entity<TUser>()
                 .ToTable("AspNetUsers");
             user.HasMany(u => u.Roles).WithRequired().HasForeignKey(ur => ur.UserId);
@@ -162,13 +163,16 @@ namespace InterSystems.AspNet.Identity.Cache
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry,
             IDictionary<object, object> items)
         {
+            // Validation for new record
             if (entityEntry != null && entityEntry.State == EntityState.Added)
             {
                 var errors = new List<DbValidationError>();
+                // Try to cast record to user, if it us null it means our entityEntry is a role
                 var user = entityEntry.Entity as TUser;
-                //check for uniqueness of user name and email
                 if (user != null)
                 {
+                    // Check for uniqueness of user name and email
+
                     if (Users.Any(u => String.Equals(u.UserName, user.UserName)))
                     {
                         errors.Add(new DbValidationError("User",
@@ -183,7 +187,7 @@ namespace InterSystems.AspNet.Identity.Cache
                 else
                 {
                     var role = entityEntry.Entity as TRole;
-                    //check for uniqueness of role name
+                    // Check for uniqueness of role name
                     if (role != null && Roles.Any(r => String.Equals(r.Name, role.Name)))
                     {
                         errors.Add(new DbValidationError("Role",
