@@ -17,8 +17,10 @@ The scope of the project is to provide ASP.NET Identity based on Cache database.
 - Resolve dependencies: install entity framework package from nuget. PackageManager-> Install-Package EntityFramework
 - Run Cache. Create namespace and specify it in connection string as in example below.
 - Add Cache connection string to App.config. Here is example. You can change params. 
+
     <add name="Cache" connectionString="Server=localhost; Port=1972; Namespace=USER;Password=SYS; User ID=_SYSTEM;" providerName="InterSystems.Data.CacheClient" />
 - Add data providers to App.config
+
   <entityFramework>
     <providers>
           <provider invariantName="InterSystems.Data.CacheClient" type="InterSystems.Data.Entity.ProviderServices, InterSystems.Data.Entity6" />
