@@ -11,6 +11,12 @@ namespace AspNetIdentityTestProject
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapRoute(
+                name: "signin-google", 
+                url: "signin-google#", 
+                defaults: new { controller = "Account", action = "ExternalLoginCallback" }
+            ); 
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
