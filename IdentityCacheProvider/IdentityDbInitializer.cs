@@ -9,7 +9,7 @@ namespace InterSystems.AspNet.Identity.Cache
     /// <summary>
     /// Default initializer that uses Cache database and enables ASP.NET Identity to work with it.
     /// </summary>
-    class IdentityDbInitializer : CreateDatabaseIfNotExists<IdentityDbContext>
+    class IdentityDbInitializer
     {
         #region Constants
 
@@ -43,14 +43,14 @@ namespace InterSystems.AspNet.Identity.Cache
                                                      LockoutEndDateUtc datetime, 
                                                      LockoutEnabled bit NOT NULL, 
                                                      AccessFailedCount int NOT NULL, 
-                                                     UserName nvarchar(256) NOT NULL UNIQUE)";
+                                                     UserName nvarchar(256) NOT NULL)";
 
         private const string AspNetRolesQuery = @"CREATE TABLE DBO.AspNetRoles (Id nvarchar(128) NOT NULL PRIMARY KEY, 
-                                                     Name nvarchar(256))";
+                                                     Name nvarchar(256) NOT NULL)";
 
         private const string AspNetUserRolesQuery = @"CREATE TABLE DBO.AspNetUserRoles (UserId nvarchar(128) NOT NULL, 
                                                      RoleId nvarchar(128), 
-                                                     CONSTRAINT PK_AspNetUserRoles PRIMARY KEY CLUSTERED (UserId), 
+                                                     CONSTRAINT PK_AspNetUserRoles PRIMARY KEY CLUSTERED (UserId, RoleId), 
                                                      FOREIGN KEY (UserId) REFERENCES DBO.AspNetUsers(Id), 
                                                      FOREIGN KEY (RoleId) REFERENCES DBO.AspNetRoles(Id))";
 
@@ -125,7 +125,7 @@ namespace InterSystems.AspNet.Identity.Cache
             }
         }
 
-        private CacheConnection BuildConnection(IdentityDbContext context)
+        private CacheConnection BuildConnection(DbContext context)
         {
             var connection = new CacheConnection();
             connection.ConnectionString = context.Database.Connection.ConnectionString;
@@ -135,12 +135,12 @@ namespace InterSystems.AspNet.Identity.Cache
         }
 
         #endregion
-
+        
         /// <summary>
         /// Provides needed initializations for the database context.
         /// </summary>
         /// <param name="context"></param>
-        public override void InitializeDatabase(IdentityDbContext context)
+        public void InitializeDatabase(DbContext context)
         {
             using (var connection = BuildConnection(context))
             {

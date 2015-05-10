@@ -81,7 +81,12 @@ namespace InterSystems.AspNet.Identity.Cache
         public IdentityDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
-            Database.SetInitializer<IdentityDbContext>(new IdentityDbInitializer());
+            if (!IsInitializerRan)
+            {
+                var initializer = new IdentityDbInitializer();
+                initializer.InitializeDatabase(this);
+                IsInitializerRan = true;
+            }
         }
 
         /// <summary>
@@ -96,7 +101,12 @@ namespace InterSystems.AspNet.Identity.Cache
         public IdentityDbContext(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
-            Database.SetInitializer<IdentityDbContext>(new IdentityDbInitializer());
+            if (!IsInitializerRan)
+            {
+                var initializer = new IdentityDbInitializer();
+                initializer.InitializeDatabase(this);
+                IsInitializerRan = true;
+            }
         }
 
         /// <summary>
@@ -113,7 +123,7 @@ namespace InterSystems.AspNet.Identity.Cache
         ///     If true validates that emails are unique
         /// </summary>
         public bool RequireUniqueEmail { get; set; }
-        
+
         /// <summary>
         /// Maps entities to tables, checks fields restrictions 
         /// needed for providing identity authentification.
@@ -201,5 +211,7 @@ namespace InterSystems.AspNet.Identity.Cache
             }
             return base.ValidateEntity(entityEntry, items);
         }
+
+        private static bool IsInitializerRan = false;
     }
 }

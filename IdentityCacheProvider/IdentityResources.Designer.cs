@@ -23,7 +23,7 @@
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Microsoft.AspNet.Identity.EntityFramework.IdentityResources", typeof(IdentityResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("InterSystems.AspNet.Identity.Cache.IdentityResources", typeof(IdentityResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
