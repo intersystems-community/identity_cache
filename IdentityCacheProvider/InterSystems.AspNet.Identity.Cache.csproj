@@ -39,6 +39,7 @@
     <Reference Include="InterSystems.Data.CacheClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ad350a26c4a4447c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\InterSystems.Data.CacheClient.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="InterSystems.Data.Entity6, Version=4.5.0.0, Culture=neutral, PublicKeyToken=ad350a26c4a4447c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
