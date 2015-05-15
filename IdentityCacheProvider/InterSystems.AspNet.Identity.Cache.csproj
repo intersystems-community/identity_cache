@@ -37,11 +37,12 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="InterSystems.Data.CacheClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=ad350a26c4a4447c, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\InterSystems.Data.Entity6.4.5.0.0\lib\net45\InterSystems.Data.CacheClient.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InterSystems.Data.CacheClient.dll</HintPath>
     </Reference>
     <Reference Include="InterSystems.Data.Entity6, Version=4.5.0.0, Culture=neutral, PublicKeyToken=ad350a26c4a4447c, processorArchitecture=MSIL">
-      <HintPath>..\packages\InterSystems.Data.Entity6.4.5.0.0\lib\net45\InterSystems.Data.Entity6.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InterSystems.Data.Entity6.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
