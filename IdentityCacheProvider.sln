@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Test", "Identity.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetIdentityTestProject", "AspNetIdentityTestProject\AspNetIdentityTestProject.csproj", "{A657FB2F-C4BB-45DA-99C0-A37CBEB98DA1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{D2CC0D61-2B72-49D3-A649-FD3EDA2A1065}"
+	ProjectSection(SolutionItems) = preProject
+		Release\InterSystems.AspNet.Identity.Cache.1.0.0.nupkg = Release\InterSystems.AspNet.Identity.Cache.1.0.0.nupkg
+		Release\InterSystems.AspNet.Identity.Cache.dll = Release\InterSystems.AspNet.Identity.Cache.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
