@@ -45,4 +45,4 @@ Nuget package.
 #####We created package - InterSystems.AspNet.Identity.Cache.1.0.0.nupkg (Release folder).
 #####Installation of nuget package to your project - http://stackoverflow.com/questions/10240029/how-to-install-a-nuget-package-nupkg-file-locally.
 
-Dll placed to Releas folder.
+Dll placed to Release folder.
