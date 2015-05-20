@@ -1,3 +1,4 @@
+#Scope
 The scope of the project is to provide ASP.NET Identity based on Cache database.
 ASP.NET Identity is the new membership system for building ASP.NET web applications. ASP.NET Identity allows you to add login features to your application and makes it easy to customize data about the logged in user.
 
@@ -41,5 +42,5 @@ You should replace Namespace and Port to yours if needed.
 - Add Identity.Test.dll (Assembly -> Open) and press RunAll tests. 
 
 Nuget package.
-We created package - InterSystems.AspNet.Identity.Cache.1.0.0.nupkg (Release folder).
-Installation of nuget package to your project - http://stackoverflow.com/questions/10240029/how-to-install-a-nuget-package-nupkg-file-locally.
+#We created package - InterSystems.AspNet.Identity.Cache.1.0.0.nupkg (Release folder).
+#Installation of nuget package to your project - http://stackoverflow.com/questions/10240029/how-to-install-a-nuget-package-nupkg-file-locally.
