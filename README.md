@@ -36,8 +36,7 @@ You should replace Namespace and Port to yours if needed.
 	 - Install-Package Microsoft.AspNet.Identity.EntityFramework
 - Then build Identity.Test project
 - Download XUnit test enviroment from https://xunit.codeplex.com/releases/view/90058 (xunit-1.9.1.zip).
-- Install XUnit enviroment. 
-- Open. 
+- Launch xunit.gui.clr4.exe.
 - Before running test you should clean all data from Identity tables in Cache (DBO.AspNetUsers, DBO.AspNetUserLogins, DBO.AspNetUserClaims, DBO.AspNetRoles, DBO.AspNetUserRoles).
 - Add Identity.Test.dll (Assembly -> Open) and press RunAll tests. 
 
