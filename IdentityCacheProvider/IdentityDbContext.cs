@@ -84,6 +84,7 @@ namespace InterSystems.AspNet.Identity.Cache
             if (!IsInitializerRan)
             {
                 var initializer = new IdentityDbInitializer();
+                Database.SetInitializer<DbContext>(initializer);
                 initializer.InitializeDatabase(this);
                 IsInitializerRan = true;
             }
@@ -104,6 +105,7 @@ namespace InterSystems.AspNet.Identity.Cache
             if (!IsInitializerRan)
             {
                 var initializer = new IdentityDbInitializer();
+                Database.SetInitializer<DbContext>(initializer);
                 initializer.InitializeDatabase(this);
                 IsInitializerRan = true;
             }

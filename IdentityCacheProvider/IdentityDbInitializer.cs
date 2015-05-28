@@ -9,7 +9,7 @@ namespace InterSystems.AspNet.Identity.Cache
     /// <summary>
     /// Default initializer that uses Cache database and enables ASP.NET Identity to work with it.
     /// </summary>
-    class IdentityDbInitializer
+    class IdentityDbInitializer : IDatabaseInitializer<DbContext>
     {
         #region Constants
 
