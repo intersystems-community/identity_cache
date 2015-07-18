@@ -81,6 +81,8 @@ namespace InterSystems.AspNet.Identity.Cache
         public IdentityDbContext(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
+            this.Database.Connection.StateChange += Reconnect;
+
             if (!IsInitializerRan)
             {
                 var initializer = new IdentityDbInitializer();
@@ -102,6 +104,8 @@ namespace InterSystems.AspNet.Identity.Cache
         public IdentityDbContext(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
+            this.Database.Connection.StateChange += Reconnect;
+
             if (!IsInitializerRan)
             {
                 var initializer = new IdentityDbInitializer();
@@ -111,6 +115,18 @@ namespace InterSystems.AspNet.Identity.Cache
             }
         }
 
+        private void Reconnect(object sender, System.Data.StateChangeEventArgs e)
+        {
+            if (((int)e.CurrentState & 
+                 (int)System.Data.ConnectionState.Open & 
+                 (int)System.Data.ConnectionState.Connecting & 
+                 (int)System.Data.ConnectionState.Executing) != 0)
+            {
+                this.Database.Connection.Close();
+                this.Database.Connection.Open();
+            }
+        }
+                
         /// <summary>
         ///     IDbSet of Users
         /// </summary>
