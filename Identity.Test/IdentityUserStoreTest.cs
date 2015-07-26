@@ -71,7 +71,7 @@ namespace Identity.Test
             }
             catch (Exception e)
             {
-                Assert.True(e.InnerException.InnerException.Message.Contains("Нарушение Ограничений UNIQUE"));
+                Assert.True(e.InnerException.InnerException.Message.Contains("UNIQUE"));
             }
 
             Clear(db);
