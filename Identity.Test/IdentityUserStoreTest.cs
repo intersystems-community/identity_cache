@@ -9,13 +9,13 @@ using Xunit;
 
 namespace Identity.Test
 {
-    public class IdentityUserStoreTest
+    public class UserStoreTest
     {
         [Fact]
         public void AddUserWithNoUserNameFailsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             Assert.Throws<DbEntityValidationException>(
                 () => AsyncHelper.RunSync(() => store.CreateAsync(new IdentityUser())));
         }
@@ -24,7 +24,7 @@ namespace Identity.Test
         public async Task CanDisableAutoSaveChangesTest()
         {
             var db = new NoopIdentityDbContext();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             store.AutoSaveChanges = false;
             var user = new IdentityUser("test");
             await store.CreateAsync(user);
@@ -38,7 +38,7 @@ namespace Identity.Test
         {
             var db = new NoopIdentityDbContext();
             db.Configuration.ValidateOnSaveEnabled = false;
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("test");
             await store.CreateAsync(user);
             Assert.True(db.SaveChangesCalled);
@@ -48,7 +48,7 @@ namespace Identity.Test
         public async Task UpdateAutoSavesTest()
         {
             var db = new NoopIdentityDbContext();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("test");
             await store.UpdateAsync(user);
             Assert.True(db.SaveChangesCalled);
@@ -60,7 +60,7 @@ namespace Identity.Test
         public async Task AddDupeUserIdWithStoreFailsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("dupemgmt");
             await store.CreateAsync(user);
             var u2 = new IdentityUser { Id = user.Id, UserName = "User" };
@@ -81,7 +81,7 @@ namespace Identity.Test
         public void UserStoreMethodsThrowWhenDisposedTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             store.Dispose();
             Assert.Throws<ObjectDisposedException>(() => AsyncHelper.RunSync(() => store.AddClaimAsync(null, null)));
             Assert.Throws<ObjectDisposedException>(() => AsyncHelper.RunSync(() => store.AddLoginAsync(null, null)));
@@ -112,7 +112,7 @@ namespace Identity.Test
         [Fact]
         public void UserStorePublicNullCheckTest()
         {
-            var store = new IdentityUserStore<IdentityUser>();
+            var store = new UserStore<IdentityUser>();
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "user is null");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "user is null");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "user is null");
@@ -174,8 +174,8 @@ namespace Identity.Test
         public async Task AddDupeUserNameWithStoreFailsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var mgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var mgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("dupe");
             UnitTestHelper.IsSuccess(await mgr.CreateAsync(user));
             var u2 = new IdentityUser("DUPe");
@@ -189,8 +189,8 @@ namespace Identity.Test
         {
             var db = UnitTestHelper.CreateDefaultDb();
             db.RequireUniqueEmail = true;
-            var mgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var mgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("u1") { Email = "email" };
             UnitTestHelper.IsSuccess(await mgr.CreateAsync(user));
             var u2 = new IdentityUser("u2") { Email = "email" };
@@ -203,7 +203,7 @@ namespace Identity.Test
         public async Task DeleteUserTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var mgmt = new IdentityUser("deletemgmttest");
             await store.CreateAsync(mgmt);
             Assert.NotNull(await store.FindByIdAsync(mgmt.Id));
@@ -217,7 +217,7 @@ namespace Identity.Test
         public async Task CreateLoadDeleteUserTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("Test");
             Assert.Null(await store.FindByIdAsync(user.Id));
             await store.CreateAsync(user);
@@ -236,7 +236,7 @@ namespace Identity.Test
         public async Task FindByUserName()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
             var user = new IdentityUser("Hao");
             await store.CreateAsync(user);
             var found = await store.FindByNameAsync("hao");
@@ -258,7 +258,7 @@ namespace Identity.Test
         public async Task GetAllUsersTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityUserStore<IdentityUser>(db);
+            var store = new UserStore<IdentityUser>(db);
 
             var oldCount = store.Users.Count();
 

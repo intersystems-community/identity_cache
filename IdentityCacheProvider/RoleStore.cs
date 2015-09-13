@@ -10,13 +10,13 @@ namespace InterSystems.AspNet.Identity.Cache
     ///     EntityFramework based implementation
     /// </summary>
     /// <typeparam name="TRole"></typeparam>
-    public class IdentityRoleStore<TRole> : IdentityRoleStore<TRole, string, IdentityUserRole>, IQueryableRoleStore<TRole>
+    public class RoleStore<TRole> : RoleStore<TRole, string, IdentityUserRole>, IQueryableRoleStore<TRole>
         where TRole : IdentityRole, new()
     {
         /// <summary>
         ///     Constructor
         /// </summary>
-        public IdentityRoleStore()
+        public RoleStore()
             : base(new IdentityDbContext())
         {
             DisposeContext = true;
@@ -26,7 +26,7 @@ namespace InterSystems.AspNet.Identity.Cache
         ///     Constructor
         /// </summary>
         /// <param name="context"></param>
-        public IdentityRoleStore(DbContext context)
+        public RoleStore(DbContext context)
             : base(context)
         {
         }
@@ -38,7 +38,7 @@ namespace InterSystems.AspNet.Identity.Cache
     /// <typeparam name="TRole"></typeparam>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TUserRole"></typeparam>
-    public class IdentityRoleStore<TRole, TKey, TUserRole> : IQueryableRoleStore<TRole, TKey>
+    public class RoleStore<TRole, TKey, TUserRole> : IQueryableRoleStore<TRole, TKey>
         where TUserRole : IdentityUserRole<TKey>, new()
         where TRole : IdentityRole<TKey, TUserRole>, new()
     {
@@ -49,7 +49,7 @@ namespace InterSystems.AspNet.Identity.Cache
         ///     Constructor which takes a db context and sets up the stores with default instances using the context
         /// </summary>
         /// <param name="context"></param>
-        public IdentityRoleStore(DbContext context)
+        public RoleStore(DbContext context)
         {
             if (context == null)
             {

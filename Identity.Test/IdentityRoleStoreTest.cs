@@ -8,14 +8,14 @@ using Xunit;
 
 namespace Identity.Test
 {
-    public class IdentityRoleStoreTest
+    public class RoleStoreTest
     {
         [Fact]
         public void ManagerPublicNullCheckTest()
         {
             ExceptionHelper.ThrowsArgumentNull(() => new RoleValidator<IdentityRole>(null), "manager");
             ExceptionHelper.ThrowsArgumentNull(() => new RoleManager<IdentityRole>(null), "store");
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>());
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
             ExceptionHelper.ThrowsArgumentNull(() => manager.RoleValidator = null, "value");
             ExceptionHelper.ThrowsArgumentNull(() => new RoleManager<IdentityRole>(null), "store");
             ExceptionHelper.ThrowsArgumentNull(
@@ -34,7 +34,7 @@ namespace Identity.Test
         [Fact]
         public void RoleManagerMethodsThrowWhenDisposedTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>());
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
             manager.Dispose();
             Assert.Throws<ObjectDisposedException>(() => AsyncHelper.RunSync(() => manager.CreateAsync(null)));
             Assert.Throws<ObjectDisposedException>(() => manager.Create(null));
@@ -51,7 +51,7 @@ namespace Identity.Test
         [Fact]
         public void RoleStoreMethodsThrowWhenDisposedTest()
         {
-            var store = new IdentityRoleStore<IdentityRole>();
+            var store = new RoleStore<IdentityRole>();
             store.Dispose();
             Assert.Throws<ObjectDisposedException>(() => AsyncHelper.RunSync(() => store.CreateAsync(null)));
             Assert.Throws<ObjectDisposedException>(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)));
@@ -75,8 +75,8 @@ namespace Identity.Test
         [Fact]
         public void RoleStorePublicNullCheckTest()
         {
-            ExceptionHelper.ThrowsArgumentNull(() => new IdentityRoleStore<IdentityRole>(null), "context is null");
-            var store = new IdentityRoleStore<IdentityRole>();
+            ExceptionHelper.ThrowsArgumentNull(() => new RoleStore<IdentityRole>(null), "context is null");
+            var store = new RoleStore<IdentityRole>();
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "role is null");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "role is null");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "role is null");
@@ -94,7 +94,7 @@ namespace Identity.Test
         public async Task CreateRoleTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("create");
             Assert.False(await manager.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
@@ -106,7 +106,7 @@ namespace Identity.Test
         [Fact]
         public async Task BadValidatorBlocksCreateTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>());
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>());
             manager.RoleValidator = new AlwaysBadValidator<IdentityRole>();
             UnitTestHelper.IsFailure(await manager.CreateAsync(new IdentityRole("blocked")),
                 AlwaysBadValidator<IdentityRole>.ErrorMessage);
@@ -116,7 +116,7 @@ namespace Identity.Test
         public async Task BadValidatorBlocksAllUpdatesTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("poorguy");
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
             var error = AlwaysBadValidator<IdentityRole>.ErrorMessage;
@@ -129,7 +129,7 @@ namespace Identity.Test
         [Fact]
         public async Task DeleteRoleTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var role = new IdentityRole("delete");
             Assert.False(await manager.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
@@ -140,7 +140,7 @@ namespace Identity.Test
         [Fact]
         public void DeleteRoleSyncTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var role = new IdentityRole("delete");
             Assert.False(manager.RoleExists(role.Name));
             UnitTestHelper.IsSuccess(manager.Create(role));
@@ -151,7 +151,7 @@ namespace Identity.Test
         [Fact]
         public void DeleteFailWithUnknownRoleTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             Assert.Throws<InvalidOperationException>(
                 () => AsyncHelper.RunSync(() => manager.DeleteAsync(new IdentityRole("bogus"))));
         }
@@ -160,7 +160,7 @@ namespace Identity.Test
         public async Task RoleFindByIdTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("FindById");
             Assert.Null(await manager.FindByIdAsync(role.Id));
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
@@ -173,7 +173,7 @@ namespace Identity.Test
         public void RoleFindByIdSyncTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("FindById");
             Assert.Null(manager.FindById(role.Id));
             UnitTestHelper.IsSuccess(manager.Create(role));
@@ -186,7 +186,7 @@ namespace Identity.Test
         public async Task RoleFindByNameTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var role = new IdentityRole("FindByName");
             Assert.Null(await manager.FindByNameAsync(role.Name));
             Assert.False(await manager.RoleExistsAsync(role.Name));
@@ -200,7 +200,7 @@ namespace Identity.Test
         public void RoleFindByNameSyncTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("FindByName");
             Assert.False(manager.RoleExists(role.Name));
             UnitTestHelper.IsSuccess(manager.Create(role));
@@ -213,7 +213,7 @@ namespace Identity.Test
         public async Task UpdateRoleNameTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("update");
             Assert.False(await manager.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
@@ -230,7 +230,7 @@ namespace Identity.Test
         public void UpdateRoleNameSyncTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("update");
             Assert.False(manager.RoleExists(role.Name));
             UnitTestHelper.IsSuccess(manager.Create(role));
@@ -247,7 +247,7 @@ namespace Identity.Test
         public async Task QuerableRolesTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             IdentityRole[] roles =
             {
@@ -271,8 +271,8 @@ namespace Identity.Test
         public async Task DeleteRoleNonEmptySucceedsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userMgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userMgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("deleteNonEmpty");
             Assert.False(await roleMgr.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await roleMgr.CreateAsync(role));
@@ -291,8 +291,8 @@ namespace Identity.Test
         public async Task DeleteUserRemovesFromRoleTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userMgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userMgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("deleteNonEmpty");
             Assert.False(await roleMgr.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await roleMgr.CreateAsync(role));
@@ -309,7 +309,7 @@ namespace Identity.Test
         [Fact]
         public async Task DeleteRoleUnknownFailsTest()
         {
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var role = new IdentityRole("bogus");
             Assert.False(await manager.RoleExistsAsync(role.Name));
             Assert.Throws<InvalidOperationException>(() => AsyncHelper.RunSync(() => manager.DeleteAsync(role)));
@@ -319,7 +319,7 @@ namespace Identity.Test
         public async Task CreateRoleFailsIfExistsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("dupeRole");
             Assert.False(await manager.RoleExistsAsync(role.Name));
             UnitTestHelper.IsSuccess(await manager.CreateAsync(role));
@@ -334,7 +334,7 @@ namespace Identity.Test
         public async Task CreateDuplicateRoleAtStoreFailsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new IdentityRoleStore<IdentityRole>(db);
+            var store = new RoleStore<IdentityRole>(db);
             var role = new IdentityRole("dupeRole");
             await store.CreateAsync(role);
             db.SaveChanges();
@@ -348,9 +348,9 @@ namespace Identity.Test
         public async Task AddUserToRoleTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var role = new IdentityRole("addUserTest");
             UnitTestHelper.IsSuccess(await roleManager.CreateAsync(role));
             IdentityUser[] users =
@@ -373,8 +373,8 @@ namespace Identity.Test
         public async Task GetRolesForUserTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleManager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             IdentityUser[] users =
             {
                 new IdentityUser("u1"), new IdentityUser("u2"), new IdentityUser("u3"),
@@ -417,8 +417,8 @@ namespace Identity.Test
         public void GetRolesForUserSyncTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleManager = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             IdentityUser[] users =
             {
                 new IdentityUser("u1"), new IdentityUser("u2"), new IdentityUser("u3"),
@@ -460,9 +460,9 @@ namespace Identity.Test
         public async Task RemoveUserFromRoleWithMultipleRoles()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var user = new IdentityUser("MultiRoleUser");
             UnitTestHelper.IsSuccess(await userManager.CreateAsync(user));
             IdentityRole[] roles =
@@ -488,9 +488,9 @@ namespace Identity.Test
         public async Task RemoveUserFromRoleTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             IdentityUser[] users =
             {
                 new IdentityUser("1"), new IdentityUser("2"), new IdentityUser("3"),
@@ -522,9 +522,9 @@ namespace Identity.Test
         public void RemoveUserFromRoleSyncTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var store = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var store = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             IdentityUser[] users =
             {
                 new IdentityUser("1"), new IdentityUser("2"), new IdentityUser("3"),
@@ -555,7 +555,7 @@ namespace Identity.Test
         public async Task RemoveUserFromBogusRolesFails()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var user = new IdentityUser("1");
             UnitTestHelper.IsSuccess(await userManager.CreateAsync(user));
             UnitTestHelper.IsFailure(await userManager.RemoveFromRolesAsync(user.Id, "bogus"), "User is not in role.");
@@ -567,7 +567,7 @@ namespace Identity.Test
         public async Task AddToBogusRolesFails()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var user = new IdentityUser("1");
             UnitTestHelper.IsSuccess(await userManager.CreateAsync(user));
             Assert.Throws<InvalidOperationException>(() => userManager.AddToRoles(user.Id, "bogus"));
@@ -579,10 +579,10 @@ namespace Identity.Test
         public async Task AddToDupeRolesFails()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var user = new IdentityUser("1");
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             IdentityRole[] roles =
             {
                 new IdentityRole("r1"), new IdentityRole("r2"), new IdentityRole("r3"),
@@ -603,9 +603,9 @@ namespace Identity.Test
         public async Task RemoveUserFromRolesTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var user = new IdentityUser("1");
             IdentityRole[] roles =
             {
@@ -642,9 +642,9 @@ namespace Identity.Test
         public void RemoveUserFromRolesSync()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userManager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var roleManager =
-                new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
+                new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(UnitTestHelper.CreateDefaultDb()));
             var user = new IdentityUser("1");
             IdentityRole[] roles =
             {
@@ -681,7 +681,7 @@ namespace Identity.Test
         public async Task UnknownRoleThrowsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var manager = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+            var manager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var u = new IdentityUser("u1");
             UnitTestHelper.IsSuccess(await manager.CreateAsync(u));
             Assert.Throws<InvalidOperationException>(
@@ -694,8 +694,8 @@ namespace Identity.Test
         public async Task RemoveUserNotInRoleFailsTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userMgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userMgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("addUserDupeTest");
             var user = new IdentityUser("user1");
             UnitTestHelper.IsSuccess(await userMgr.CreateAsync(user));
@@ -710,8 +710,8 @@ namespace Identity.Test
         public async Task AddUserToRoleFailsIfAlreadyInRoleTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var userMgr = new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var userMgr = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("addUserDupeTest");
             var user = new IdentityUser("user1");
             UnitTestHelper.IsSuccess(await userMgr.CreateAsync(user));
@@ -727,7 +727,7 @@ namespace Identity.Test
         public async Task FindRoleByNameWithManagerTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("findRoleByNameTest");
             UnitTestHelper.IsSuccess(await roleMgr.CreateAsync(role));
             Assert.Equal(role.Id, (await roleMgr.FindByNameAsync(role.Name)).Id);
@@ -739,7 +739,7 @@ namespace Identity.Test
         public async Task FindRoleWithManagerTest()
         {
             var db = UnitTestHelper.CreateDefaultDb();
-            var roleMgr = new RoleManager<IdentityRole>(new IdentityRoleStore<IdentityRole>(db));
+            var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             var role = new IdentityRole("findRoleTest");
             UnitTestHelper.IsSuccess(await roleMgr.CreateAsync(role));
             Assert.Equal(role.Name, (await roleMgr.FindByIdAsync(role.Id)).Name);

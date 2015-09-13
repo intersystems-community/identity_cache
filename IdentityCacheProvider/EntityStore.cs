@@ -45,7 +45,7 @@ namespace InterSystems.AspNet.Identity.Cache
         /// <returns></returns>
         public virtual Task<TEntity> GetByIdAsync(object id)
         {
-            return DbEntitySet.FindAsync(id);
+            return id != null ? DbEntitySet.FindAsync(id) : null;
         }
 
         /// <summary>
@@ -54,7 +54,10 @@ namespace InterSystems.AspNet.Identity.Cache
         /// <param name="entity"></param>
         public void Create(TEntity entity)
         {
-            DbEntitySet.Add(entity);
+            if (entity != null)
+            {
+                DbEntitySet.Add(entity);
+            }
         }
 
         /// <summary>
@@ -63,7 +66,10 @@ namespace InterSystems.AspNet.Identity.Cache
         /// <param name="entity"></param>
         public void Delete(TEntity entity)
         {
-            DbEntitySet.Remove(entity);
+            if (entity != null)
+            {
+                DbEntitySet.Remove(entity);
+            }
         }
 
         /// <summary>

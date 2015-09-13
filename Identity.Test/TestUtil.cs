@@ -51,7 +51,7 @@ namespace Identity.Test
             OnCreate = ((options, context) =>
             {
                 var manager =
-                    new UserManager<IdentityUser>(new IdentityUserStore<IdentityUser>(db));
+                    new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
                 manager.UserValidator = new UserValidator<IdentityUser>(manager)
                 {
                     AllowOnlyAlphanumericUserNames = true,

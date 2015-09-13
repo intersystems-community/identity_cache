@@ -15,14 +15,14 @@ namespace InterSystems.AspNet.Identity.Cache
     ///     IUserRoleStore
     /// </summary>
     /// <typeparam name="TUser"></typeparam>
-    public class IdentityUserStore<TUser> :
-        IdentityUserStore<TUser, IdentityRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>,
+    public class UserStore<TUser> :
+        UserStore<TUser, IdentityRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>,
         IUserStore<TUser> where TUser : IdentityUser
     {
         /// <summary>
         ///     Default constuctor which uses a new instance of a default DbContext
         /// </summary>
-        public IdentityUserStore()
+        public UserStore()
             : this(new IdentityDbContext())
         {
             DisposeContext = true;
@@ -32,7 +32,7 @@ namespace InterSystems.AspNet.Identity.Cache
         ///     Constructor
         /// </summary>
         /// <param name="context"></param>
-        public IdentityUserStore(DbContext context)
+        public UserStore(DbContext context)
             : base(context)
         {
         }
@@ -48,7 +48,7 @@ namespace InterSystems.AspNet.Identity.Cache
     /// <typeparam name="TUserLogin"></typeparam>
     /// <typeparam name="TUserRole"></typeparam>
     /// <typeparam name="TUserClaim"></typeparam>
-    public class IdentityUserStore<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim> :
+    public class UserStore<TUser, TRole, TKey, TUserLogin, TUserRole, TUserClaim> :
         IUserLoginStore<TUser, TKey>,
         IUserClaimStore<TUser, TKey>,
         IUserRoleStore<TUser, TKey>,
@@ -77,7 +77,7 @@ namespace InterSystems.AspNet.Identity.Cache
         ///     Constructor which takes a db context and sets up the stores with default instances using the context
         /// </summary>
         /// <param name="context"></param>
-        public IdentityUserStore(DbContext context)
+        public UserStore(DbContext context)
         {
             if (context == null)
             {
