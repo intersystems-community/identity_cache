@@ -31,7 +31,7 @@ namespace Identity.Test
 
         public static ArgumentException ThrowsArgumentNullOrEmpty(Assert.ThrowsDelegate del, string paramName)
         {
-            return ThrowsArgumentException(del, "Value cannot be null or empty.\r\nParameter name: " + paramName,
+            return ThrowsArgumentException(del, "Value cannot be null or empty.",
                 paramName);
         }
 

@@ -113,61 +113,61 @@ namespace Identity.Test
         public void UserStorePublicNullCheckTest()
         {
             var store = new UserStore<IdentityUser>();
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddClaimAsync(null, null)), "user is null");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddClaimAsync(null, null)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.RemoveClaimAsync(null, null)),
-                "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetClaimsAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetLoginsAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetRolesAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddLoginAsync(null, null)), "user is null");
+                "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetClaimsAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetLoginsAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetRolesAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddLoginAsync(null, null)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.RemoveLoginAsync(null, null)),
-                "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddToRoleAsync(null, null)), "user is null");
+                "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.AddToRoleAsync(null, null)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.RemoveFromRoleAsync(null, null)),
-                "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.IsInRoleAsync(null, null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetPasswordHashAsync(null)), "user is null");
+                "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.IsInRoleAsync(null, null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetPasswordHashAsync(null)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.SetPasswordHashAsync(null, null)),
-                "user is null");
+                "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetSecurityStampAsync(null)),
-                "user is null");
+                "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.SetSecurityStampAsync(null, null)), "user is null");
+                () => AsyncHelper.RunSync(() => store.SetSecurityStampAsync(null, null)), "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.AddClaimAsync(new IdentityUser("fake"), null)), "claim is null");
+                () => AsyncHelper.RunSync(() => store.AddClaimAsync(new IdentityUser("fake"), null)), "claim");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.RemoveClaimAsync(new IdentityUser("fake"), null)), "claim is null");
+                () => AsyncHelper.RunSync(() => store.RemoveClaimAsync(new IdentityUser("fake"), null)), "claim");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.AddLoginAsync(new IdentityUser("fake"), null)), "login is null");
+                () => AsyncHelper.RunSync(() => store.AddLoginAsync(new IdentityUser("fake"), null)), "login");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.RemoveLoginAsync(new IdentityUser("fake"), null)), "login is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.FindAsync(null)), "login is null");
+                () => AsyncHelper.RunSync(() => store.RemoveLoginAsync(new IdentityUser("fake"), null)), "login");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.FindAsync(null)), "login");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetEmailConfirmedAsync(null)),
-                "user is null");
+                "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.SetEmailConfirmedAsync(null, true)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetEmailAsync(null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.SetEmailAsync(null, null)), "user is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetPhoneNumberAsync(null)), "user is null");
+                () => AsyncHelper.RunSync(() => store.SetEmailConfirmedAsync(null, true)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetEmailAsync(null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.SetEmailAsync(null, null)), "user");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetPhoneNumberAsync(null)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.SetPhoneNumberAsync(null, null)),
-                "user is null");
+                "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.GetPhoneNumberConfirmedAsync(null)), "user is null");
+                () => AsyncHelper.RunSync(() => store.GetPhoneNumberConfirmedAsync(null)), "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.SetPhoneNumberConfirmedAsync(null, true)), "user is null");
+                () => AsyncHelper.RunSync(() => store.SetPhoneNumberConfirmedAsync(null, true)), "user");
             ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.GetTwoFactorEnabledAsync(null)),
-                "user is null");
+                "user");
             ExceptionHelper.ThrowsArgumentNull(
-                () => AsyncHelper.RunSync(() => store.SetTwoFactorEnabledAsync(null, true)), "user is null");
+                () => AsyncHelper.RunSync(() => store.SetTwoFactorEnabledAsync(null, true)), "user");
             ExceptionHelper.ThrowsArgumentNullOrEmpty(
-                () => AsyncHelper.RunSync(() => store.AddToRoleAsync(new IdentityUser("fake"), null)), "roleName is empty or null");
+                () => AsyncHelper.RunSync(() => store.AddToRoleAsync(new IdentityUser("fake"), null)), "roleName");
             ExceptionHelper.ThrowsArgumentNullOrEmpty(
-                () => AsyncHelper.RunSync(() => store.RemoveFromRoleAsync(new IdentityUser("fake"), null)), "roleName is empty or null");
+                () => AsyncHelper.RunSync(() => store.RemoveFromRoleAsync(new IdentityUser("fake"), null)), "roleName");
             ExceptionHelper.ThrowsArgumentNullOrEmpty(
-                () => AsyncHelper.RunSync(() => store.IsInRoleAsync(new IdentityUser("fake"), null)), "roleName is empty or null");
+                () => AsyncHelper.RunSync(() => store.IsInRoleAsync(new IdentityUser("fake"), null)), "roleName");
         }
 
         [Fact]

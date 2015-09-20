@@ -75,11 +75,11 @@ namespace Identity.Test
         [Fact]
         public void RoleStorePublicNullCheckTest()
         {
-            ExceptionHelper.ThrowsArgumentNull(() => new RoleStore<IdentityRole>(null), "context is null");
+            ExceptionHelper.ThrowsArgumentNull(() => new RoleStore<IdentityRole>(null), "context");
             var store = new RoleStore<IdentityRole>();
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "role is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "role is null");
-            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "role is null");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.CreateAsync(null)), "role");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.UpdateAsync(null)), "role");
+            ExceptionHelper.ThrowsArgumentNull(() => AsyncHelper.RunSync(() => store.DeleteAsync(null)), "role");
         }
 
         [Fact]

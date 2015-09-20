@@ -81,7 +81,7 @@ namespace InterSystems.AspNet.Identity.Cache
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context is null");
+                throw new ArgumentNullException("Context");
             }
             Context = context;
             AutoSaveChanges = true;
@@ -125,7 +125,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             await EnsureClaimsLoaded(user).WithCurrentCulture();
             return user.Claims.Select(c => new Claim(c.ClaimType, c.ClaimValue)).ToList();
@@ -142,11 +142,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (claim == null)
             {
-                throw new ArgumentNullException("claim is null");
+                throw new ArgumentNullException("Claim");
             }
             _userClaims.Add(new TUserClaim { UserId = user.Id, ClaimType = claim.Type, ClaimValue = claim.Value });
             return Task.FromResult(0);
@@ -163,11 +163,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (claim == null)
             {
-                throw new ArgumentNullException("claim is null");
+                throw new ArgumentNullException("Claim");
             }
             IEnumerable<TUserClaim> claims;
             var claimValue = claim.Value;
@@ -198,7 +198,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.EmailConfirmed);
         }
@@ -214,7 +214,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.EmailConfirmed = confirmed;
             return Task.FromResult(0);
@@ -231,7 +231,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.Email = email;
             return Task.FromResult(0);
@@ -247,7 +247,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.Email);
         }
@@ -274,7 +274,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return
                 Task.FromResult(user.LockoutEndDateUtc.HasValue
@@ -293,7 +293,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.LockoutEndDateUtc = lockoutEnd == DateTimeOffset.MinValue ? (DateTime?)null : lockoutEnd.UtcDateTime;
             return Task.FromResult(0);
@@ -309,7 +309,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.AccessFailedCount++;
             return Task.FromResult(user.AccessFailedCount);
@@ -325,7 +325,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.AccessFailedCount = 0;
             return Task.FromResult(0);
@@ -342,7 +342,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.AccessFailedCount);
         }
@@ -357,7 +357,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.LockoutEnabled);
         }
@@ -373,7 +373,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.LockoutEnabled = enabled;
             return Task.FromResult(0);
@@ -410,7 +410,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             _userStore.Create(user);
             await SaveChanges().WithCurrentCulture();
@@ -425,7 +425,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             _userStore.Delete(user);
             await SaveChanges().WithCurrentCulture();
@@ -440,7 +440,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             _userStore.Update(user);
             await SaveChanges().WithCurrentCulture();
@@ -466,7 +466,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (login == null)
             {
-                throw new ArgumentNullException("login is null");
+                throw new ArgumentNullException("Login");
             }
             var provider = login.LoginProvider;
             var key = login.ProviderKey;
@@ -491,11 +491,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (login == null)
             {
-                throw new ArgumentNullException("login is null");
+                throw new ArgumentNullException("Login");
             }
             _logins.Add(new TUserLogin
             {
@@ -517,11 +517,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (login == null)
             {
-                throw new ArgumentNullException("login is null");
+                throw new ArgumentNullException("Login");
             }
             TUserLogin entry;
             var provider = login.LoginProvider;
@@ -551,7 +551,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             await EnsureLoginsLoaded(user).WithCurrentCulture();
             return user.Logins.Select(l => new UserLoginInfo(l.LoginProvider, l.ProviderKey)).ToList();
@@ -568,7 +568,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.PasswordHash = passwordHash;
             return Task.FromResult(0);
@@ -584,7 +584,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.PasswordHash);
         }
@@ -610,7 +610,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.PhoneNumber = phoneNumber;
             return Task.FromResult(0);
@@ -626,7 +626,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.PhoneNumber);
         }
@@ -641,7 +641,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.PhoneNumberConfirmed);
         }
@@ -657,7 +657,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.PhoneNumberConfirmed = confirmed;
             return Task.FromResult(0);
@@ -674,11 +674,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (String.IsNullOrWhiteSpace(roleName))
             {
-                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName is empty or null");
+                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName");
             }
             var roleEntity = await _roleStore.DbEntitySet.SingleOrDefaultAsync(r => r.Name.ToUpper() == roleName.ToUpper());
             if (roleEntity == null)
@@ -702,11 +702,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (String.IsNullOrWhiteSpace(roleName))
             {
-                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName is empty or null");
+                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName");
             }
             var roleEntity = await _roleStore.DbEntitySet.SingleOrDefaultAsync(r => r.Name.ToUpper() == roleName.ToUpper());
             if (roleEntity != null)
@@ -731,7 +731,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("user");
             }
             var userId = user.Id;
             var query = from userRole in _userRoles
@@ -752,11 +752,11 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             if (String.IsNullOrWhiteSpace(roleName))
             {
-                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName is empty or null");
+                throw new ArgumentException(IdentityResources.ValueCannotBeNullOrEmpty, "roleName");
             }
             var role = await _roleStore.DbEntitySet.SingleOrDefaultAsync(r => r.Name.ToUpper() == roleName.ToUpper());
             if (role != null)
@@ -779,7 +779,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.SecurityStamp = stamp;
             return Task.FromResult(0);
@@ -795,7 +795,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.SecurityStamp);
         }
@@ -811,7 +811,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             user.TwoFactorEnabled = enabled;
             return Task.FromResult(0);
@@ -827,7 +827,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (user == null)
             {
-                throw new ArgumentNullException("user is null");
+                throw new ArgumentNullException("User");
             }
             return Task.FromResult(user.TwoFactorEnabled);
         }

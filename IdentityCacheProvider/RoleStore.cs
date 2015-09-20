@@ -53,7 +53,7 @@ namespace InterSystems.AspNet.Identity.Cache
         {
             if (context == null)
             {
-                throw new ArgumentNullException("context is null");
+                throw new ArgumentNullException("Context");
             }
             Context = context;
             _roleStore = new EntityStore<TRole>(context);
@@ -100,7 +100,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (role == null)
             {
-                throw new ArgumentNullException("role is null");
+                throw new ArgumentNullException("Role");
             }
             _roleStore.Create(role);
             await Context.SaveChangesAsync().WithCurrentCulture();
@@ -115,7 +115,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (role == null)
             {
-                throw new ArgumentNullException("role is null");
+                throw new ArgumentNullException("Role");
             }
             _roleStore.Delete(role);
             await Context.SaveChangesAsync().WithCurrentCulture();
@@ -130,7 +130,7 @@ namespace InterSystems.AspNet.Identity.Cache
             ThrowIfDisposed();
             if (role == null)
             {
-                throw new ArgumentNullException("role is null");
+                throw new ArgumentNullException("Role");
             }
             _roleStore.Update(role);
             await Context.SaveChangesAsync().WithCurrentCulture();

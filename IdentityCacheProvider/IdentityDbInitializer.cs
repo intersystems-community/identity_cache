@@ -99,7 +99,7 @@ namespace InterSystems.AspNet.Identity.Cache
                 case AspNetUserLogins:
                     return AspNetUserLoginsQuery;
                 default:
-                    throw new ArgumentException("Unexpected table name!");
+                    throw new ArgumentException("Invalid table name!");
             }
         }
 
